@@ -38,7 +38,7 @@ print ("    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝  �
 time.sleep(1.75)
 clear()
 table = Table(show_header=True, header_style='bold #2070b2',
-              title='\n[bold][#2070b2]Trip[/#2070b2][#f8e020]Hazard[/#f8e020] Fingerboard 2.2\n')
+              title='\n\n[bold][#2070b2]Trip[/#2070b2][#f8e020]Hazard[/#f8e020] Fingerboard 2.2\n')
 
 table.add_column('[white]Left Motors             ', justify='center')
 table.add_column('[white]Right Motors             ', justify='center')
@@ -124,11 +124,10 @@ def press(key):
            negLeft = abs(left)
            negRight = abs(right)
 
-
-           print (" ")
-           print ("**************** Straighten *****************")
-           print ("Left Motors: " + str(left) + "              Right Motors: " + str(right))
-           print (" ")
+           clear()
+           table.add_row(str(left), str(right), '[#ffffff]Straiten')
+           console.print(table)
+           
            writeData("motor1;" + directionRight + ";" + str(negRight))
            writeData("motor3;" + directionRight + ";" + str(negRight))
            writeData("motor2;" + directionLeft + ";" + str(negLeft))
@@ -320,71 +319,95 @@ def press(key):
 
         if key == "1":
 
-           print ("Led Pattern: rgbShine")
+           clear()
+           table.add_row(str(left), str(right), '[yellow]Led Pattern: [#31f7d9]rgbShine')
+           console.print(table)
+           
            writeData("rgbShine;" + "on" )
            key = ""
 
         if key == "0":
-           print ("Led Pattern: leds off")
+
+           clear()
+           table.add_row(str(left), str(right), '[#31f7d9]LEDs Off')
+           console.print(table)
+           
            writeData ("ledsOff")
 
         if key == "2":
-           print ("Led Pattern: rgbPolice")
+
+           clear()
+           table.add_row(str(left), str(right), '[yellow]Led Pattern: [#31f7d9]rgbPolice')
+           console.print(table)
+           
            writeData("rgbPolice;" + "on" )
        
 
         if key == "3":
-           print ("Led Pattern: rgbHoodlight")
+
+           clear()
+           table.add_row(str(left), str(right), '[yellow]Led Pattern: [#31f7d9]rgbHoodlight')
+           console.print(table)
+           
            writeData("rgbHoodlight;" + "on")
        
 
         if key == "b":
-           print ("Beep")
+
+           clear()
+           table.add_row(str(left), str(right), '[#df75f4]Beep')
+           console.print(table)
+           
            writeData("beep" )
        
 
         if key == "4":
-           print ("Led Pattern: rgbHazard")
+
+           clear()
+           table.add_row(str(left), str(right), '[yellow]Led Pattern: [#31f7d9]rgbHazard')
+           console.print(table)
+           
            writeData("rgbHazard;" + "on" )
        
 
         if key == "5":
-           print ("Led Pattern: rgbKnightRider")
+
+           clear()
+           table.add_row(str(left), str(right), '[yellow]Led Pattern: [#31f7d9]rgbrgbKnightrider')
+           console.print(table)
+           
            writeData("rgbKnightRider;" + "on" )
 
         if key == "6": subprocess.run(["mpg123", "-f 16000", "/usr/local/snd/howdy.mp3"])
 
         if key == "7":
-           print ("bullshit.mp3")
+
+           clear()
+           table.add_row(str(left), str(right), '[white]Sound: [#31f7d9]Bullshit')
+           console.print(table)
+           
            res = os.system('mpg123 /usr/local/snd/bullshit.mp3')
 
 
         if key == "8":
-           print ("headlight: on")
+          
+           clear()
+           table.add_row(str(left), str(right), '[white]Headlight: [green]ON')
+           console.print(table)
+           
            writeData("lighton" )
        
 
         if key == "9":
-           print ("headlight: off")
+          
+           clear()
+           table.add_row(str(left), str(right), '[white]Headlight: [red]off')
+           console.print(table)
+           
            writeData("lightoff" )
 
 
 
 listen_keyboard(
          on_press=press,
-#          on_release=release,
     )
-
-
-
-#def release(key):
-#         checkInternetHttplib("192.168.10.1", 3)
-
-#        negLeft = abs(left)
-#        negRight = abs(right)
-
-#        print ("")  
-#        writeData("motor1;" + directionRight + ";" + str(negRight))
-#        writeData("motor2;" + directionRight + ";" + str(negRight))
-#        writeData("motor3;" + directionLeft + ";" + str(negLeft))
-#        writeData("motor4;" + directionLeft + ";" + str(negLeft))
