@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
 
-
-
 import os
 import requests
 import subprocess
@@ -28,6 +26,9 @@ negRight = 0
 directionLeft = " "
 directionRight = " "
 clear()
+
+# Splash Screen
+
 print ("\n\n")
 print (" ████████╗██████╗ ██╗██████╗ ██╗  ██╗ █████╗ ███████╗ █████╗ ██████╗ ██████╗ ")
 print (" ╚══██╔══╝██╔══██╗██║██╔══██╗██║  ██║██╔══██╗╚══███╔╝██╔══██╗██╔══██╗██╔══██╗")
@@ -37,21 +38,19 @@ print ("    ██║   ██║  ██║██║██║     ██║  �
 print ("    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ")
 time.sleep(1.75)
 clear()
+
+# Display Table
+
 table = Table(show_header=True, header_style='bold #2070b2',
               title='\n\n[bold][#2070b2]Trip[/#2070b2][#f8e020]Hazard[/#f8e020] Fingerboard 2.2\n')
 
 table.add_column('[white]Left Motors             ', justify='center')
 table.add_column('[white]Right Motors             ', justify='center')
 table.add_column('[white]Command             ', justify='center')
-
-
 table.add_row('0', '0', '[green]Stopped')
 console.print(table)
 
 
-
-#console = Console()
-#console.print(table)
 
 def writeData(value):
         byteValue = StringToBytes(value)
@@ -64,7 +63,6 @@ def StringToBytes(val):
                     retVal.append(ord(c))
             return retVal
 
-
 def press(key):
 
         global left
@@ -74,8 +72,7 @@ def press(key):
 
 #    print(f"'{key}' pressed")
 
-
-
+# Key Mapping
 
         if key == "j":
            clear()
@@ -83,8 +80,6 @@ def press(key):
            console.print(table)
            writeData("jump")
            
-
-
         if key == "p":
            clear()
            left = 255
@@ -110,16 +105,11 @@ def press(key):
            writeData("motor2;" + directionLeft + ";" + str(negLeft))
            writeData("motor4;" + directionLeft + ";" + str(negLeft))
 
-
-
-
         if key == "r":
            if left <  right:
               right = left
            if right < left:
               left = right
-
-
 
            negLeft = abs(left)
            negRight = abs(right)
@@ -159,11 +149,8 @@ def press(key):
            if right < 0:
               directionRight = "reverse"
 
-
-
            negLeft = abs(left)
            negRight = abs(right)
-
          
            clear()
            table.add_row(str(left), str(right), '[#ffffff]Forward')
@@ -173,9 +160,6 @@ def press(key):
            writeData("motor3;" + directionRight + ";" + str(negRight))
            writeData("motor2;" + directionLeft + ";" + str(negLeft))
            writeData("motor4;" + directionLeft + ";" + str(negLeft))
-
-
-
 
         if key == "d":
 
@@ -205,7 +189,6 @@ def press(key):
 
            negLeft = abs(left)
            negRight = abs(right)
-
     
            clear()
            table.add_row(str(left), str(right), '[#ffffff]Reverse')
@@ -254,7 +237,6 @@ def press(key):
            writeData("motor2;" + directionLeft + ";" + str(negLeft))
            writeData("motor4;" + directionRight + ";" + str(negRight))
 
-
         if key == "a":
 
            left = left + 24
@@ -265,7 +247,6 @@ def press(key):
 
            if right >= 255:
               right = 255
-
 
            if left <= -255:
               left = -255
@@ -285,7 +266,6 @@ def press(key):
            if right < 0:
               directionRight = "reverse"
 
-
            negLeft = abs(left)
            negRight = abs(right)
           
@@ -297,8 +277,6 @@ def press(key):
            writeData("motor3;" + directionLeft + ";" + str(negLeft))
            writeData("motor2;" + directionLeft + ";" + str(negLeft))
            writeData("motor4;" + directionRight + ";" + str(negRight))
-
-
 
         if key == "space":
            directionLeft = "forward"
@@ -313,9 +291,7 @@ def press(key):
            table.add_row('0', '0', '[green]Stopped')
            console.print(table)
          
-
            writeData("allmotors;stop")
-
 
         if key == "1":
 
@@ -342,7 +318,6 @@ def press(key):
            
            writeData("rgbPolice;" + "on" )
        
-
         if key == "3":
 
            clear()
@@ -351,7 +326,6 @@ def press(key):
            
            writeData("rgbHoodlight;" + "on")
        
-
         if key == "b":
 
            clear()
@@ -360,7 +334,6 @@ def press(key):
            
            writeData("beep" )
        
-
         if key == "4":
 
            clear()
@@ -369,7 +342,6 @@ def press(key):
            
            writeData("rgbHazard;" + "on" )
        
-
         if key == "5":
 
            clear()
@@ -388,7 +360,6 @@ def press(key):
            
            res = os.system('mpg123 /usr/local/snd/bullshit.mp3')
 
-
         if key == "8":
           
            clear()
@@ -397,7 +368,6 @@ def press(key):
            
            writeData("lighton" )
        
-
         if key == "9":
           
            clear()
@@ -405,7 +375,6 @@ def press(key):
            console.print(table)
            
            writeData("lightoff" )
-
 
 
 listen_keyboard(
