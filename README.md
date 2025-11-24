@@ -1,4 +1,4 @@
 # TripHazard_V3
-Complete restructuring of the TripHazard software and files.
-
-Changes that are so diffirent from the original, that it just made sense to start a new repository.
+I've added "controllerboard" python script for Xbox Bluetooth control.
+The "fingerboard" script has changed, but not for the better. I'm stripping it down.
+The LEDs are not at the top of my list and are on the back-burner.
