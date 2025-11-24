@@ -1,0 +1,250 @@
+#!/usr/bin/python
+
+import pygame
+import smbus
+
+bus = smbus.SMBus(1)
+addressMega = 0x09
+addressNanoRarm = 0x0b
+
+timeout = 1
+
+def writeData(value):
+        byteValue = StringToBytes(value)
+        bus.write_i2c_block_data(addressMega,0x00,byteValue) #first byte is 0=command >
+
+        bus.write_i2c_block_data(addressNanoRarm,0x00,byteValue) #first byte is 0=comm>
+
+def StringToBytes(val):
+            retVal = []
+            for c in val:
+                    retVal.append(ord(c))
+            return retVal
+
+
+def main():
+
+    left = 0
+    right = 0
+    negLeft = 0
+    negRight = 0
+    directionLeft = " "
+    directionRight = " "
+    motorSpeed_L = 0
+    motorSpeed_R = 0
+    trigger_L = 0
+    trigger_R = 0
+    pygame.init()
+
+
+
+    # This dict can be left as-is, since pygame will generate a
+    # pygame.JOYDEVICEADDED event for every joystick connected
+    # at the start of the program.
+    joysticks = {}
+
+    done = False
+    while not done:
+        # Event processing step.
+        # Possible joystick events: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
+        # JOYBUTTONUP, JOYHATMOTION, JOYDEVICEADDED, JOYDEVICEREMOVED
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                done = True  # Flag that we are done so we exit this loop.
+
+            if event.type == pygame.JOYBUTTONDOWN:
+#               print (event.button)
+
+               if event.button == 11:
+#                  print ("armUp", event.button)
+                  writeData("armUp")
+
+               if event.button == 12:
+#                  print ("armDown")
+                  writeData ("armDown")
+
+               if event.button == 6:
+#                  print ("lighton")
+                  writeData ("lighton")
+
+               if event.button == 15:
+#                 print ("lightoff")
+                  writeData ("lightoff")
+
+               if event.button == 0:
+#                  print ("stop")
+                  writeData ("allmotors;stop")
+
+
+#            if event.type == pygame.JOYBUTTONUP:
+#                print("Joystick button released.")
+
+            # Handle hotplugging
+            if event.type == pygame.JOYDEVICEADDED:
+                # This event will be generated when the program starts for every
+                # joystick, filling up the list without needing to create them manually.
+                    joy = pygame.joystick.Joystick(event.device_index)
+                    joysticks[joy.get_instance_id()] = joy
+                    print(f"Joystick {joy.get_instance_id()} connencted")
+
+            if event.type == pygame.JOYDEVICEREMOVED:
+                    del joysticks[event.instance_id]
+
+
+
+            if event.type == pygame.JOYAXISMOTION:
+
+                x_axis = joystick.get_axis(0)  # Left joystick X-axis
+                y_axis = joystick.get_axis(1)  # Left joystick Y-axis
+
+                trigger_L = joystick.get_axis(4)  # Left trigger
+                trigger_R = joystick.get_axis(5)  # right trigger
+
+                x_axis = x_axis * 255
+                y_axis = y_axis * 255
+                trigger_L = (trigger_L + 1) * 127
+                trigger_R = (trigger_R  + 1) * 127
+
+                x_axis = round(x_axis)
+                y_axis = round(y_axis)
+
+                motorSpeed = abs(y_axis)
+#                print (x_axis, y_axis, trigger_L, trigger_R)
+
+                if y_axis < 0:
+                    directionRight = "forward"
+                    directionLeft = "forward"
+
+                if y_axis > 0:
+                    directionRight = "reverse"
+                    directionLeft = "reverse"
+
+                if abs(y_axis) < 20:
+                    directionRight = "stopped"
+                    directionLeft = "stopped"
+                motorSpeed = abs(y_axis)
+
+                if x_axis < 0:
+                    turnDir = "Left"
+
+                if x_axis > 0:
+                    turnDir = "Right"
+
+                if abs(x_axis) < 20:
+                    turnDir = "centered"
+
+                if turnDir == "Left":
+                    motorSpeed_L = motorSpeed - abs(x_axis)
+                    motorSpeed_R = motorSpeed 
+
+                if turnDir == "Right":
+                    motorSpeed_L = motorSpeed
+                    motorSpeed_R = motorSpeed - abs(x_axis) 
+
+                if motorSpeed_L < 16:
+                    motorSpeed_L = 0
+
+
+                if motorSpeed_R < 16:
+                    motorSpeed_R = 0
+
+
+                if turnDir == "centered":
+                    motorSpeed_L = motorSpeed
+                    motorSpeed_R = motorSpeed
+
+
+                if directionRight == "stopped" and turnDir == "centered":
+                    writeData ("allmotors;stop")
+                
+#                print (x_axis, y_axis, trigger_L, trigger_R)
+
+ #           print("\nDebug Data:")
+ #           print("\nDirection:", directionLeft, "    Turn Dir:", turnDir, "    Motor Speed:", motorSpeed,"    Left Motors:", motorSpeed_L, "    Right Motors:", motorSpeed_R)
+
+ #           print("\nData being sent:")
+ #           print("motor1;" + directionRight + ";" + str(motorSpeed_R))
+#            writeData("motor3;" + directionRight + ";" + str(motorSpeed_R))
+#            writeData("motor2;" + directionLeft + ";" + str(motorSpeed_L))
+#            writeData("motor4;" + directionLeft + ";" + str(motorSpeed_L))
+
+#            print("       X-Axis:", x_axis)
+#            print("       Y-Axis:", y_axis)
+#            print(" Left Trigger:", trigger_L_pos)
+#            print("Right Trigger:", trigger_R_pos)
+
+#                print("\nDirection:", directionLeft, "    Turn Dir:", turnDir, "    Motor Speed:", motorSpeed,"    Left Motors:", motorSpeed_L, "    Right Motors:", motorSpeed_R)
+ 
+#                print (power_level)
+                writeData("motor2;" + directionLeft + ";" + str(motorSpeed_R))
+                writeData("motor3;" + directionLeft + ";" + str(motorSpeed_R))
+                writeData("motor1;" + directionRight + ";" + str(motorSpeed_L))
+                writeData("motor4;" + directionRight + ";" + str(motorSpeed_L))
+
+
+            pygame.event.clear()
+
+
+
+
+
+
+
+    #            print(f"Joystick {event.instance_id} disconnected")
+
+    
+        # Get count of joysticks.
+        joystick_count = pygame.joystick.get_count()
+
+     #   print("Number of joysticks:", {joystick_count})
+
+
+        # For each joystick:
+        for joystick in joysticks.values():
+            jid = joystick.get_instance_id()
+
+#            print("Joystick", {jid})
+
+
+            # Get the name from the OS for the controller/joystick.
+            name = joystick.get_name()
+      #      print("Joystick name:", {name})
+
+            guid = joystick.get_guid()
+       #     print("GUID:", {guid})
+
+            power_level = joystick.get_power_level()
+        #    print("Joystick's power level:", {power_level})
+
+            # Usually axis run in pairs, up/down for one, and left/right for
+            # the other. Triggers count as axes.
+            axes = joystick.get_numaxes()
+        #    print("Number of axes:", {axes})
+
+            buttons = joystick.get_numbuttons()
+         #   print ("Number of buttons:", {buttons})
+
+
+            for i in range(buttons):
+                button = joystick.get_button(i)
+ #               print("Button {i:>2} value:", {button})
+
+
+            hats = joystick.get_numhats()
+  #          print ("Number of hats:", {hats})
+
+
+            # Hat position. All or nothing for direction, not a float like
+            # get_axis(). Position is a tuple of int values (x, y).
+            for i in range(hats):
+                hat = joystick.get_hat(i)
+   #             print ("Hat {i} value:", {str(hat)})
+
+
+
+if __name__ == "__main__":
+    main()
+    # If you forget this line, the program will 'hang'
+    # on exit if running from IDLE.
+    pygame.quit()
