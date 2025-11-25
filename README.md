@@ -14,9 +14,11 @@ Xbox Series X controller.<br>
 12v to 5v converter.<br>
 8 inch lightbar designed for ATVs<br> 
 XBox 360 depth camera for now. It's on the upgrade list (it's losing support in the open source community.)<br><br>
+JBL Flip 5 for sound.
+
 
 I've added "controllerboard" python script for Xbox Bluetooth controller.<br>
-The "fingerboard" keyboard script has changed, but not for the better. I'm stripping it down. (mostly LED and sound stuff"<br>
+The "fingerboard" keyboard script has changed, but not for the better. I'm stripping it down. (mostly LED and sound stuff)<br>
 The LEDs are not at the top of my list and are on the back-burner.<br>
 
 Special thanks to Jim Reel who welded the main canopy for me. See you on the flip side.
