@@ -11,7 +11,7 @@ Arduino Mega 2650<br>
 4 x PowerWheels Motors<br>
 Elecrow 5 inch LCD touch screen.<br>
 Xbox Series X controller.<br>
-12v to 5v connverter.<br>
+12v to 5v converter.<br>
 8 inch lightbar designed for ATVs<br> 
 XBox 360 depth camera for now. It's on the upgrade list (it's losing support in the open source community.)<br><br>
 
