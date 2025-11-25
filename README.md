@@ -3,7 +3,7 @@
 <img src="https://github.com/mighty0101/TripHazard_V3/blob/main/TripHazard_Pumpkin_small.jpg"><br>
 Specs:<br>
 
-Raspberry pi 5 8G ram<br>
+Raspberry pi4 8G ram<br>
 Arduino Mega 2650<br>
 6 x BTS7960 Motor Drivers. One for each wheel, and one for each arm<br>
 4 x arduino Nano. One for each arm, and 2 on the back-burner for the LEDs.<br>
