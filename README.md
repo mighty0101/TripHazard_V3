@@ -1,7 +1,4 @@
-# TripHazard_V3<br>
-<h3>-=Arms and Legs=-</h3>
-<img src="https://github.com/mighty0101/TripHazard_V3/blob/main/TripHazard_Pumpkin_small.jpg"><br>
-Specs:<br>
+
 
 Raspberry pi4 8G ram<br>
 Arduino Mega 2650<br>
